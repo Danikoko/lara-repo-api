@@ -17,9 +17,28 @@ class OrderRepository implements OrderRepositoryInterface
         ]);
     }
 
-    public function createOrder(array $orderDetails)
+    public function createOrder(array $orderDetails): JsonResponse
     {
-        return Order::create($orderDetails);
+        // Transform the creation data
+        $trueOrderDetails = [
+            'details' => $orderDetails['details'],
+            'client' => $orderDetails['client']
+        ];
+
+        // Save the order
+        $orderSaved = Order::create($trueOrderDetails);
+        if ($orderSaved) {
+            return response()->json([
+                'data' => $orderSaved,
+                'status' => 'success',
+                'message' => 'Order added successfully'
+            ], 201);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'The order couldn\'t be added'
+            ], 401);
+        }
     }
 
     public function getOrderById($orderId)

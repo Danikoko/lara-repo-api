@@ -6,6 +6,7 @@ use App\Interfaces\OrderRepositoryInterface;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use Illuminate\Http\JsonResponse;
 
 class OrderController extends Controller
 {
@@ -37,7 +38,8 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+        return $this->orderRepository->createOrder($validatedData);
     }
 
     /**
