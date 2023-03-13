@@ -28,8 +28,10 @@ class OrderRepository implements OrderRepositoryInterface
         // Save the order
         $orderSaved = Order::create($trueOrderDetails);
         if ($orderSaved) {
+            $orderId = $orderSaved->id;
+            $order = Order::findOrFail($orderId);
             return response()->json([
-                'data' => new OrderResource($orderSaved),
+                'data' => new OrderResource($order),
                 'status' => 'success',
                 'message' => 'Order added successfully.'
             ], 201);
@@ -41,8 +43,9 @@ class OrderRepository implements OrderRepositoryInterface
         }
     }
 
-    public function getSingleOrder($order)
+    public function getOrderById($orderId)
     {
+        $order = Order::findOrFail($orderId);
         return response()->json([
             'data' => new OrderResource($order)
         ]);
@@ -50,7 +53,27 @@ class OrderRepository implements OrderRepositoryInterface
 
     public function updateOrder($orderId, array $newDetails)
     {
-        return Order::whereId($orderId)->update($newDetails);
+        // Transform the update data
+        $trueNewDetails = [
+            'details' => $newDetails['details'],
+            'client' => $newDetails['client']
+        ];
+
+        // Update the order
+        $orderUpdated = Order::whereId($orderId)->update($trueNewDetails);
+        if ($orderUpdated) {
+            $order = Order::findOrFail($orderId);
+            return response()->json([
+                'data' => new OrderResource($order),
+                'status' => 'success',
+                'message' => 'Order updated successfully.'
+            ], 201);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'The order couldn\'t be updated.'
+            ], 401);
+        }
     }
 
     public function deleteOrder($orderId)
