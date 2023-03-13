@@ -23,6 +23,13 @@ Route::middleware('api')->prefix('orders')->group(function() {
     Route::delete('{order}', [OrderController::class, 'delete']);
 });
 
+Route::fallback(function () {
+    return response()->json([
+        'status' => 'error',
+        'message' => 'Not Found!'
+    ], 404);
+});
+
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });

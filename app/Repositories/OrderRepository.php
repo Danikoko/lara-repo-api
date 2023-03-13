@@ -31,19 +31,21 @@ class OrderRepository implements OrderRepositoryInterface
             return response()->json([
                 'data' => new OrderResource($orderSaved),
                 'status' => 'success',
-                'message' => 'Order added successfully'
+                'message' => 'Order added successfully.'
             ], 201);
         } else {
             return response()->json([
                 'status' => 'error',
-                'message' => 'The order couldn\'t be added'
+                'message' => 'The order couldn\'t be added.'
             ], 401);
         }
     }
 
-    public function getOrderById($orderId)
+    public function getSingleOrder($order)
     {
-        return Order::findOrFail($orderId);
+        return response()->json([
+            'data' => new OrderResource($order)
+        ]);
     }
 
     public function updateOrder($orderId, array $newDetails)
