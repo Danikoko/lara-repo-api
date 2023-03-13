@@ -78,7 +78,18 @@ class OrderRepository implements OrderRepositoryInterface
 
     public function deleteOrder($orderId)
     {
-        Order::destroy($orderId);
+        $orderDestroyed = Order::destroy($orderId);
+        if ($orderDestroyed) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Order deleted successfully.'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'The order couldn\'t be deleted.'
+            ], 401);
+        }
     }
 
     public function getFulfilledOrders()
