@@ -17,6 +17,7 @@ use App\Http\Controllers\OrderController;
 
 Route::middleware('api')->prefix('orders')->group(function() {
     Route::get('/', [OrderController::class, 'index']);
+    Route::get('/fulfilled', [OrderController::class, 'fulfilledOrders']);
     Route::get('{order}', [OrderController::class, 'show']);
     Route::post('/', [OrderController::class, 'store']);
     Route::put('{order}', [OrderController::class, 'update']);

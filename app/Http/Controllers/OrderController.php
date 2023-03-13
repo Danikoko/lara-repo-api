@@ -25,6 +25,11 @@ class OrderController extends Controller
         return $this->orderRepository->getAllOrders();
     }
 
+    public function fulfilledOrders()
+    {
+        return $this->orderRepository->getFulfilledOrders();
+    }
+
     /**
      * Show the form for creating a new resource.
      */

@@ -94,6 +94,9 @@ class OrderRepository implements OrderRepositoryInterface
 
     public function getFulfilledOrders()
     {
-        return Order::where('is_fulfilled', true);
+        $orders = OrderResource::collection(Order::where('is_fulfilled', true)->get());
+        return response()->json([
+            'data' => $orders
+        ]);
     }
 }
