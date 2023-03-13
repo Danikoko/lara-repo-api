@@ -29,7 +29,7 @@ class OrderRepository implements OrderRepositoryInterface
         $orderSaved = Order::create($trueOrderDetails);
         if ($orderSaved) {
             return response()->json([
-                'data' => $orderSaved,
+                'data' => new OrderResource($orderSaved),
                 'status' => 'success',
                 'message' => 'Order added successfully'
             ], 201);
