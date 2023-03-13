@@ -20,7 +20,7 @@ Route::middleware('api')->prefix('orders')->group(function() {
     Route::get('{order}', [OrderController::class, 'show']);
     Route::post('/', [OrderController::class, 'store']);
     Route::put('{order}', [OrderController::class, 'update']);
-    Route::delete('{order}', [OrderController::class, 'delete']);
+    Route::delete('{order}', [OrderController::class, 'destroy']);
 });
 
 Route::fallback(function () {
