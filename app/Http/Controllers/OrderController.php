@@ -47,7 +47,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        return $this->orderRepository->getSingleOrder($order);
+        return $this->orderRepository->getOrderById($order->id);
     }
 
     /**
@@ -63,7 +63,8 @@ class OrderController extends Controller
      */
     public function update(UpdateOrderRequest $request, Order $order)
     {
-        //
+        $validatedData = $request->validated();
+        return $this->orderRepository->updateOrder($order->id, $validatedData);
     }
 
     /**
