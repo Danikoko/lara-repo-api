@@ -6,7 +6,6 @@ use App\Interfaces\OrderRepositoryInterface;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
-use Illuminate\Http\JsonResponse;
 
 class OrderController extends Controller
 {
