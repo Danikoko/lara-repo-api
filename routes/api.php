@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,8 @@ Route::middleware('api')->prefix('orders')->group(function() {
     Route::put('{order}', [OrderController::class, 'update']);
     Route::delete('{order}', [OrderController::class, 'destroy']);
 });
+
+Route::post('/contact', [ContactController::class, 'sendContactMail'])->middleware('api');
 
 Route::fallback(function () {
     return response()->json([

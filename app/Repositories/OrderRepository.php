@@ -43,7 +43,7 @@ class OrderRepository implements OrderRepositoryInterface
         }
     }
 
-    public function getOrderById($orderId)
+    public function getOrderById($orderId): JsonResponse
     {
         $order = Order::findOrFail($orderId);
         return response()->json([
@@ -51,7 +51,7 @@ class OrderRepository implements OrderRepositoryInterface
         ]);
     }
 
-    public function updateOrder($orderId, array $newDetails)
+    public function updateOrder($orderId, array $newDetails): JsonResponse
     {
         // Transform the update data
         $trueNewDetails = [
@@ -76,7 +76,7 @@ class OrderRepository implements OrderRepositoryInterface
         }
     }
 
-    public function deleteOrder($orderId)
+    public function deleteOrder($orderId): JsonResponse
     {
         $orderDestroyed = Order::destroy($orderId);
         if ($orderDestroyed) {
@@ -92,7 +92,7 @@ class OrderRepository implements OrderRepositoryInterface
         }
     }
 
-    public function getFulfilledOrders()
+    public function getFulfilledOrders(): JsonResponse
     {
         $orders = OrderResource::collection(Order::where('is_fulfilled', true)->get());
         return response()->json([
