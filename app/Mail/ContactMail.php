@@ -17,12 +17,13 @@ class ContactMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct($contactDetails)
+    public function __construct($contactDetails, $mailFromAddress)
     {
         $this->name = $contactDetails['name'];
         $this->email = $contactDetails['email'];
         $this->phone = $contactDetails['phone'];
         $this->content = $contactDetails['content'];
+        $this->mailFromAddress = $mailFromAddress;
     }
 
     /**
@@ -31,7 +32,7 @@ class ContactMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address($this->email, $this->name),
+            from: new Address($this->mailFromAddress, $this->name),
             replyTo: [
                 new Address($this->email, $this->name)
             ],

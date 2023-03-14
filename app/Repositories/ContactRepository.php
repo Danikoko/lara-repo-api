@@ -11,7 +11,8 @@ class ContactRepository implements ContactRepositoryInterface
 {
     public function sendContactMail(array $contactDetails): JsonResponse
     {
-        $mailSent = Mail::to(env('DEVELOPER_EMAIL'))->send(new ContactMail($contactDetails));
+        $mailFromAddress = env('MAIL_FROM_ADDRESS');
+        $mailSent = Mail::to(env('DEVELOPER_EMAIL'))->send(new ContactMail($contactDetails, $mailFromAddress));
         if ($mailSent) {
             return response()->json([
                 'status' => 'success',
